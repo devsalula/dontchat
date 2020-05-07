@@ -1,0 +1,29 @@
+version: "3"
+services:
+
+    flask:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "5000:5000"
+        environment:
+            MONGODB_DATABASE: donchatdb
+            MONGODB_USERNAME: dontchat
+            MONGODB_PASSWORD: dontchat
+            MONGODB_HOSTNAME: mongodb
+        depends_on:
+            - "mongodb"
+        volumes:
+            - ".:/app"
+
+    mongodb:
+        image: "mongo"
+        container_name: mongodb
+        ports:
+            - "27017:27017"
+        volumes:
+            - "/data/db"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: dontchat
+            MONGO_INITDB_ROOT_PASSWORD: dontchat
