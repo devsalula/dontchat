@@ -4,6 +4,10 @@ from project import socketio
 
 socket_blueprint = Blueprint('socket', __name__)
 
+@socketio.on('connecting')
+def handle_connect(data):
+    socketio.emit('connecting', data)
+
 @socketio.on('message')
 def handle_message(data):
-    print(data)
+    socketio.emit('message', data, broadcast=True)

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, render_template, request
 
 controller_blueprint = Blueprint('controller', __name__)
 
@@ -7,5 +7,7 @@ def home():
     return render_template('index.html')
 
 @controller_blueprint.route('/chat', methods=['GET'])
-def chat_room():
-    return render_template('chat.html')
+def chat():
+    username = request.args.get('username')
+    chatId = request.args.get('chatId')
+    return render_template('chat.html', username=username, chatId=chatId)
