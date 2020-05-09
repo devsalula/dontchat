@@ -1,6 +1,12 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask
+from flask_pymongo import PyMongo
+
+from project.api.controller import controller_blueprint
+
+
+db = PyMongo()
 
 
 def create_app(script_info=None):
@@ -9,11 +15,12 @@ def create_app(script_info=None):
     app_settings = os.getenv('APP_SETTINGS')
     app.config.from_object(app_settings)
 
-    from project.api.controller import test_blueprint
-    app.register_blueprint(test_blueprint)
+    app.config["MONGO_URI"] = 'mongodb://' + os.environ['MONGODB_USERNAME'] + ':' + \
+        os.environ['MONGODB_PASSWORD'] + '@' + os.environ['MONGODB_HOSTNAME'] + \
+        ':27017/' + os.environ['MONGODB_DATABASE']
 
-    @app.shell_context_processor
-    def ctx():
-        return {'app': app}
-    
+    db.init_app(app)
+
+    app.register_blueprint(controller_blueprint)
+
     return app

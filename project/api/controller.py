@@ -1,7 +1,11 @@
 from flask import Blueprint, jsonify, render_template
 
-test_blueprint = Blueprint('ping', __name__)
+controller_blueprint = Blueprint('controller', __name__)
 
-@test_blueprint.route('/ping', methods=['GET'])
-def ping():
+@controller_blueprint.route('/', methods=['GET'])
+def home():
     return render_template('index.html')
+
+@controller_blueprint.route('/chat', methods=['GET'])
+def chat_room():
+    return render_template('chat.html')
