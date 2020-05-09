@@ -16,17 +16,20 @@
         }
         .align-form {
             width: 100%;
-            height: 10%;
+            height: 100%;
             display: flex;
             align-self: flex-end;
         }
         .box-chat {
-            width: 90%;
+            width: 80%;
+            margin-right: 10px;
+            word-wrap: break-word;
         }
         .send-chat {
-            width: 10%;
+            width: 20%;
         }
         #messages {
+            overflow: auto;
             width: 90%;
             margin-left: 5%;
         }
@@ -37,8 +40,15 @@
             justify-content: space-between;
         }
         .text-design {
-            background-color: aquamarine;
-            border-radius: 10%;
+            background-color: #cccccc;
+            font-family: sans-serif;
+            padding: 1%;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+        .box-send_enter {
+            width: 100%;
+            height: 9.5vh;
         }
     </style>
 </head>
@@ -48,10 +58,12 @@
     <div class="full-screen">
         <div class="organize">
             <div id="messages"></div>
-            <form class="align-form">
-                <input class="box-chat" type="text" placeholder="Digite a sua mensagem" id="box_message">
-                <button class="send-chat" type="submit">Enviar</button>
-            </form>
+            <div class="box-send_enter">
+                <form class="align-form">
+                    <input autoComplete="off" class="box-chat" name="box" type="text" placeholder="Digite a sua mensagem" id="box_message">
+                    <button class="send-chat" type="submit">Enviar</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
@@ -72,14 +84,17 @@
         socket.emit('message', {
             username: "{{ username }}",
             chatId: "{{ chatId }}",
+            date: new Date,
             message: message_box.value
         })
         event.preventDefault();
+        document.getElementById('box_message').value = '';
     });
 
     socket.on('message', (data) => {
         const text_chat = document.createElement('div');
-        text_chat.innerHTML = `<p  class="text-design"><b>${data.username}:&nbsp</b> ${data.message}</p>`;
+        console.log(data)
+        text_chat.innerHTML = `<p  class="text-design"><b>${data.username}:&nbsp</b><br> ${data.message}</p>`;
         document.getElementById('messages').appendChild(text_chat);
     })
 </script>
