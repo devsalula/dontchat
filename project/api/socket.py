@@ -1,9 +1,9 @@
-from Flask import Blueprint
-from flask_socketio import SocketIO
+from flask import Blueprint
 
-app = Blueprint('socket', __name__)
-socketio = SocketIO(app)
+from project import socketio
 
-@socketio.on('join_chat')
-def join_chat_event(data):
-    app.logger.info("{} joined in the chat {}".format(data['username'], data['chatId']))
+socket_blueprint = Blueprint('socket', __name__)
+
+@socketio.on('message')
+def handle_message(data):
+    print(data)
