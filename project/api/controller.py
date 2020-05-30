@@ -8,6 +8,11 @@ def home():
 
 @controller_blueprint.route('/chat', methods=['GET'])
 def chat_redirect():
-    chatId = request.args.get('chatId')
+    chat_id = request.args.get('chatId')
     username = request.args.get('username')
-    return render_template('chat.html', username=username, chatId=chatId)
+    return render_template('chat.html', username=username, chatId=chat_id)
+    # return redirect(url_for('controller.chat_private', chat_id=chat_id))
+
+# @controller_blueprint.route('/chat_private/<chat_id>', methods=['GET'])
+# def chat_private(chat_id):
+    # return render_template('chat.html', username=None, chatId=chat_id)
