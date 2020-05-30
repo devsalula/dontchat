@@ -7,8 +7,6 @@ socket_blueprint = Blueprint('socket', __name__)
 
 @socketio.on('joined')
 def handle_connect(data):
-    print("hahahahah")
-    print(data['chatId'])
     room = data['chatId']
     join_room(room)
     emit('join_room', data, room=room)

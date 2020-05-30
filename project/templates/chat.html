@@ -27,17 +27,26 @@
         }
         .send-chat {
             width: 20%;
+            border-radius: 7%;
         }
-        #messages {
+        #messages {          
             overflow: auto;
-            width: 90%;
-            margin-left: 5%;
+            width: 100%;
+            height: 100%;
+        }
+        ::-webkit-scrollbar {
+            display: none;
         }
         .organize {
-            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            border-radius: 2%;
+            background-color: rgb(255, 255, 255);
+            width: 40%;
+            height: 50%;
+            margin: 5% auto;
+            padding: 1%;
         }
         .text-design {
             background-color: #cccccc;
@@ -49,6 +58,16 @@
         .box-send_enter {
             width: 100%;
             height: 9.5vh;
+            margin-bottom: 1%;
+        }
+        .join-style {
+            display: flex;
+            justify-content: center;
+            font-family: sans-serif;
+            background-color: rgba(204, 204, 204, 0.4);
+            border-radius: 10px;
+            margin-right: 29%;
+            margin-left: 29%;
         }
     </style>
 </head>
@@ -64,6 +83,12 @@
                     <button class="send-chat" type="submit">Enviar</button>
                 </form>
             </div>
+            <div>
+                <form>
+                    <input type="text" placeholder="Email">
+                    <button>Enviar para o Email</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
@@ -75,33 +100,41 @@
         socket.emit('joined', {
             username: '{{ username }}',
             chatId: '{{ chatId }}'
-        })
+        });
     });
 
     socket.on('join_room', (data) => {
-        console.log(data)
+        const joinRoom = document.createElement('div');
+        joinRoom.innerHTML = `<p class="join-style"><b>${data.username}&nbsp</b>entrou</p>`
+        updateScroll(joinRoom);
     });
 
     let chat = document.querySelector('form');
-    let message_box = document.getElementById('box_message');
+    let messageBox = document.getElementById('box_message');
 
     chat.addEventListener('submit', (event) => {
         socket.emit('message', {
             username: "{{ username }}",
             chatId: "{{ chatId }}",
             date: new Date,
-            message: message_box.value
-        })
+            message: messageBox.value
+        });
         event.preventDefault();
         document.getElementById('box_message').value = '';
     });
 
     socket.on('message', (data) => {
-        const text_chat = document.createElement('div');
+        const textChat = document.createElement('div');
         console.log(data)
-        text_chat.innerHTML = `<p  class="text-design"><b>${data.username}:&nbsp</b><br> ${data.message}</p>`;
-        document.getElementById('messages').appendChild(text_chat);
-    })
-</script>
+        textChat.innerHTML = `<p  class="text-design"><b>${data.username}:&nbsp</b><br> ${data.message}</p>`;
+        updateScroll(textChat);
+    });
 
+    function updateScroll(elmt) {
+        const getDivMessages = document.getElementById('messages');
+        getDivMessages.appendChild(elmt);
+        getDivMessages.scrollTop = getDivMessages.scrollHeight; 
+    };
+
+</script>
 </html>
