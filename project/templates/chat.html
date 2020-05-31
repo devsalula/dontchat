@@ -59,7 +59,6 @@
     });
 
     socket.on('message', (data) => {
-        console.log("CHEGUEI")
         const textChat = document.createElement('div');
         textChat.innerHTML = `<p  class="text-design"><b>${data.username}:&nbsp</b><br> ${data.message}</p>`;
         updateScroll(textChat);
