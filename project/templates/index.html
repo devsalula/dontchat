@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>dontchat</title>
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styleindex.css') }}">
-    </head>
-    <body>
-        <h1>dontchat</h1>
+
+<head>
+    <meta charset="UTF-8">
+    <title>dontchat</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styleindex.css') }}">
+</head>
+
+<body>
+    <div class="organize">
+        <h1 class="centralize-title">dontchat</h1>
         <form class="align-form" action="/chat">
             <div>
                 <label>Coloque o seu nome:</label>
-                <input type="text" name="username" placeholder="Nome" required>
+                <input type="text" name="username" placeholder="Nome" autocomplete="off" required>
             </div>
             <div>
                 <label>Coloque o id da sala:</label>
-                <input type="text" name="chatId" placeholder="Sala" required>
+                <input type="text" name="chatId" placeholder="Sala" autocomplete="off" required>
             </div>
-            <button type="submit">Entrar</button>
+            <button class="button-style" type="submit">Entrar</button>
         </form>
-    </body>
+    </div>
+</body>
+
 </html>
