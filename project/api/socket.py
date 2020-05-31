@@ -1,7 +1,9 @@
-from flask import Blueprint, session
+import json
+
+from flask import Blueprint
 from flask_socketio import join_room, emit
 
-from project import socketio
+from project import socketio, db
 
 socket_blueprint = Blueprint('socket', __name__)
 
@@ -13,4 +15,7 @@ def handle_connect(data):
 
 @socketio.on('message')
 def handle_message(data):
+    convert = json.dumps(data)
+    load_data = json.loads(convert)
+    db.messages.insert_one(load_data)
     emit('message', data, broadcast=True, room=data['chatId'])

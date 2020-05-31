@@ -1,11 +1,10 @@
 import os
 
 from flask import Flask
-from flask_pymongo import PyMongo
 from flask_socketio import SocketIO
+from flask_pymongo import PyMongo
 
-
-db = PyMongo()
+mongo = PyMongo()
 socketio = SocketIO()
 
 app = Flask(__name__)
@@ -13,12 +12,12 @@ app = Flask(__name__)
 app_settings = os.getenv('APP_SETTINGS')
 app.config.from_object(app_settings)
 
-app.config["MONGO_URI"] = 'mongodb://' + os.environ['MONGODB_USERNAME'] + ':' + \
-    os.environ['MONGODB_PASSWORD'] + '@' + os.environ['MONGODB_HOSTNAME'] + \
-    ':27017/' + os.environ['MONGODB_DATABASE']
+app.config["MONGO_URI"] = 'mongodb://' + os.environ['MONGODB_URI']
 
-db.init_app(app)
+mongo.init_app(app)
 socketio.init_app(app)
+
+db = mongo.db
 
 from project.api.controller import controller_blueprint
 from project.api.socket import socket_blueprint

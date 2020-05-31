@@ -105,7 +105,7 @@
 
     socket.on('join_room', (data) => {
         const joinRoom = document.createElement('div');
-        joinRoom.innerHTML = `<p class="join-style"><b>${data.username}&nbsp</b>entrou</p>`
+        joinRoom.innerHTML = `<p class="join-style"><b>${data.username}&nbsp</b>entrou na sala</p>`
         updateScroll(joinRoom);
     });
 

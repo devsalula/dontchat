@@ -10,11 +10,7 @@ services:
         environment:
             FLASK_APP: project/__init__.py
             FLASK_ENV: development
-            APP_SETTINGS: project.config.DevelopmentConfig
-            MONGODB_DATABASE: donchatdb
-            MONGODB_USERNAME: dontchat
-            MONGODB_PASSWORD: dontchat
-            MONGODB_HOSTNAME: mongodb
+        env_file: local.env
         depends_on:
             - "mongodb"
         volumes:
@@ -28,5 +24,7 @@ services:
         volumes:
             - "/data/db"
         environment:
-            MONGO_INITDB_ROOT_USERNAME: dontchat
-            MONGO_INITDB_ROOT_PASSWORD: dontchat
+            MONGO_INITDB_ROOT_USERNAME: dontchat-admin
+            MONGO_INITDB_ROOT_PASSWORD: dontchat-admin
+            MONGO_INITDB_DATABASE: dontchatdb
+
