@@ -2,3 +2,4 @@ Flask
 Flask-PyMongo
 requests
 Flask-SocketIO
+Flask-Mail

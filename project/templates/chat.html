@@ -20,10 +20,9 @@
                 </form>
             </div>
             <div>
-                <form>
-                    <input type="text" placeholder="Email">
-                    <button>Enviar para o Email</button>
-                </form>
+                <input type="text" name="email" placeholder="Email" id="emailid" required>
+                <button type="submit" onclick="sendEmail();">Enviar para o Email</button>
+                <p style="font-size: small;">Enviar um email irá te retirar da sala</p>
             </div>
         </div>
     </div>
@@ -60,8 +59,8 @@
     });
 
     socket.on('message', (data) => {
+        console.log("CHEGUEI")
         const textChat = document.createElement('div');
-        console.log(data)
         textChat.innerHTML = `<p  class="text-design"><b>${data.username}:&nbsp</b><br> ${data.message}</p>`;
         updateScroll(textChat);
     });
@@ -71,6 +70,21 @@
         getDivMessages.appendChild(elmt);
         getDivMessages.scrollTop = getDivMessages.scrollHeight; 
     };
+
+    function sendEmail() {
+        let emailBox = document.getElementById('emailid');
+        console.log("{{ url_for('controller.home') }}")
+        window.location.href = "{{ url_for('controller.home') }}";
+        socket.emit('send_email', {
+            email: emailBox.value,
+            username: "{{ username }}",
+            chatId: "{{ chatId }}",
+        });
+    };
+
+    socket.on('leave', (data) => {
+        console.log("CHEGUEI")
+    });
 
 </script>
 </html>
