@@ -14,6 +14,8 @@ app.config.from_object(app_settings)
 
 app.config["MONGO_URI"] = 'mongodb://' + os.environ['MONGODB_URI']
 
+app.static_folder = './templates/static'
+
 mongo.init_app(app)
 socketio.init_app(app)
 

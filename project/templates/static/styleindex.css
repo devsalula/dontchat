@@ -1,0 +1,8 @@
+body {
+    font-family: sans-serif;
+}
+.align-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
