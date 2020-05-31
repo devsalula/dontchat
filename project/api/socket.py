@@ -28,7 +28,7 @@ def handle_email(data):
     email_receiver = data['email']
     msg = Message(subject="Histórico de Conversas", sender=email_sender, recipients=[email_receiver], body=messages)  
     mail.send(msg)
-    emit('leave', data, room=data['chatId'])
+    emit('bye', data, broadcast=True, room=data['chatId'])
 
 def get_messages_by_chat_id(chat_id):    
     values = db.messages.find({'chatId': chat_id})

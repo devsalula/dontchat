@@ -73,7 +73,6 @@
 
     function sendEmail() {
         let emailBox = document.getElementById('emailid');
-        console.log("{{ url_for('controller.home') }}")
         window.location.href = "{{ url_for('controller.home') }}";
         socket.emit('send_email', {
             email: emailBox.value,
@@ -82,9 +81,10 @@
         });
     };
 
-    socket.on('leave', (data) => {
-        console.log("CHEGUEI")
-    });
-
+    socket.on('bye', (data) => {
+        const leaveRoom = document.createElement('div');
+        leaveRoom.innerHTML = `<p class="join-style"><b>${data.username}&nbsp</b>saiu da sala</p>`
+        updateScroll(leaveRoom);
+    })
 </script>
 </html>
